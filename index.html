@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Buffet - Solução em Gastronomia Empresarial no DF e Entorno</title>
+    
+    <meta name="description" content="Maison Buffet: Excelência em serviços de buffet para eventos corporativos e sociais em todo o Distrito Federal e Entorno. Profissionalismo e alta gastronomia.">
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- Fontes e Cores Base (Variáveis do Site Principal) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+        :root {
+            --font-title: 'Playfair Display', serif; 
+            --font-body: 'Montserrat', sans-serif;  
+            
+            --color-primary: #2a1d15;   /* Marrom Escuro (da logo) */
+            --color-secondary: #c9a95e;  /* Dourado / Ouro Velho (da logo) */
+            --color-background: #fdfaf5; /* Bege/Creme (substitui o branco) */
+            --color-text-dark: #333;
+            --color-text-light: #f0f0f0;
+            --color-white: #ffffff;
+            
+            --header-height: 80px; 
+        }
+
+        /* --- Loader --- */
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primary); 
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        /* LOGO AQUI: Logo.jpeg (a primeira logo com a casinha) */
+        .loader-logo { width: 150px; height: auto; margin-bottom: 30px; } 
+        .loader-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--color-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #content.hidden { opacity: 0; visibility: hidden; transition: opacity 0.5s ease; }
+        #content.visible { opacity: 1; visibility: visible; }
+
+        /* --- Reset e Estilos Globais --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: var(--font-body); color: var(--color-text-dark); line-height: 1.7; background-color: var(--color-background); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        .section { padding: 100px 0; }
+        .bg-dark { background-color: var(--color-primary); color: var(--color-text-light); }
+        .bg-light { background-color: #f7f3ed; }
+
+        /* --- Títulos e Botões --- */
+        h1, h2, h3 { 
+            font-family: var(--font-title); /* PLAYFAIR DISPLAY */
+            font-weight: 600; 
+            line-height: 1.3; 
+            color: var(--color-primary); 
+            margin-bottom: 20px; 
+        }
+        .section-title { font-size: 2.8rem; text-align: center; margin-bottom: 15px; letter-spacing: 1px; }
+        .section-subtitle { text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 60px; font-weight: 300; }
+        .section-title.light-text { color: var(--color-secondary); }
+        .bg-dark p { color: var(--color-text-light); }
+        .btn { display: inline-block; padding: 12px 30px; text-decoration: none; font-weight: 500; border-radius: 5px; transition: all 0.3s ease; letter-spacing: 0.5px; border: 2px solid transparent; }
+        .btn-primary { background: var(--color-secondary); color: var(--color-primary); border-color: var(--color-secondary); }
+        .btn-primary:hover { background: transparent; color: var(--color-secondary); }
+        .btn-secondary { background: transparent; color: var(--color-primary); border-color: var(--color-primary); }
+        .btn-secondary:hover { background: var(--color-primary); color: var(--color-white); }
+
+        /* --- Header e Navegação --- */
+        #main-header { position: fixed; width: 100%; top: 0; z-index: 1000; background: transparent; transition: background-color 0.4s ease, box-shadow 0.4s ease; }
+        #main-header.scrolled { background: var(--color-background); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; height: var(--header-height); }
+        /* LOGO AQUI: Logo.jpeg (a primeira logo com a casinha) */
+        .navbar .logo img { height: 50px; width: auto; transition: filter 0.3s ease; }
+        .navbar .nav-menu { list-style: none; display: flex; }
+        .navbar .nav-menu li { margin-left: 40px; }
+        .navbar .nav-menu a { text-decoration: none; color: var(--color-white); font-weight: 500; position: relative; padding-bottom: 5px; transition: color 0.3s ease; }
+        #main-header.scrolled .navbar .nav-menu a { color: var(--color-text-dark); }
+        .navbar .nav-menu a:hover { color: var(--color-secondary); }
+        .navbar .nav-menu a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--color-secondary); transition: width 0.3s ease; }
+        .navbar .nav-menu a:hover::after { width: 100%; }
+        .hamburger-menu { display: none; font-size: 1.8rem; color: var(--color-white); cursor: pointer; }
+        #main-header.scrolled .hamburger-menu { color: var(--color-primary); }
+
+        /* --- Seção Hero (Home) --- */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            /* CAPA DO SITE: Logo.jpeg (a logo dourada em fundo escuro) */
+            background: url('Logo.jpeg') no-repeat center center/cover;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+            padding-top: var(--header-height); 
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(42, 29, 21, 0.75); }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        /* Título reduzido para 3.5rem (Formal) */
+        .hero-content h1 { 
+            font-size: 3.5rem; 
+            color: var(--color-secondary); 
+            font-weight: 700; 
+            margin-bottom: 25px; 
+            letter-spacing: 2px; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); 
+            line-height: 1.1; 
+            color: var(--color-secondary); 
+        }
+        .hero-content p { font-size: 1.4rem; font-weight: 300; margin-bottom: 50px; color: var(--color-text-light); }
+
+        /* --- Seção Sobre --- */
+        .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about-image { position: relative; text-align: center; }
+        /* IMAGEM ACIMA DE "NOSSA MISSÃO": persona.jpeg */
+        .about-image img { width: 100%; height: auto; max-width: 450px; border-radius: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .about-content { padding-left: 40px; }
+        .about-content h2 { text-align: left; font-size: 2.5rem; }
+        .about-content p { font-size: 1.05rem; margin-bottom: 25px; color: #555; }
+
+        /* --- Seção Cardápios e Galeria de Pratos --- */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 80px; }
+        .menu-card { background: var(--color-white); border: 1px solid #eee; padding: 40px 30px; border-radius: 5px; text-align: center; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .menu-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(42, 29, 21, 0.1); }
+        .menu-card h3 { font-size: 1.8rem; color: var(--color-secondary); }
+        .menu-card p { font-size: 1.1rem; font-weight: 400; color: #666; }
+
+        /* NOSSAS SUGESTÕES DE PRATOS GOURMET (IMAGENS ENVIADAS) */
+        .dishes-gallery { column-count: 3; column-gap: 20px; margin-top: 40px; }
+        .dish-item { margin-bottom: 20px; display: inline-block; width: 100%; border-radius: 5px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .dish-item img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+        .dish-item:hover img { transform: scale(1.05); }
+        
+        /* --- Estilos Adicionais (Serviços, Formulário e Modal) --- */
+        
+        /* --- Estilos Faltantes: Serviços (Services Grid) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .service-item {
+            background: rgba(255, 255, 255, 0.05); /* Leve transparência no fundo escuro */
+            padding: 30px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .service-item:hover {
+            background: rgba(201, 169, 94, 0.1); /* Destaque leve em dourado */
+        }
+        .service-icon {
+            font-size: 3rem;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+        }
+        .service-item h3 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--color-text-light);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .service-item p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 300;
+        }
+        
+        /* --- Estilos Faltantes: Formulário de Contato --- */
+        #contact-form {
+            display: grid;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        #contact-form .form-group {
+            margin-bottom: 10px;
+        }
+        #contact-form input[type="text"],
+        #contact-form input[type="email"],
+        #contact-form input[type="number"],
+        #contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        #contact-form textarea {
+            resize: vertical;
+        }
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            border-color: var(--color-secondary);
+            outline: none;
+        }
+
+        /* --- Estilos Faltantes: Modal (Popup Cardápio) --- */
+        .modal {
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--color-background);
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        .close-button {
+            color: var(--color-primary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--color-secondary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #modal-title {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+        #modal-price {
+            display: block;
+            color: var(--color-secondary);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        #modal-description {
+            color: #555;
+            font-size: 1rem;
+        }
+        
+        /* --- Seção Galeria de Momentos (IMAGENS ENVIADAS) --- */
+        /* CORREÇÃO: As imagens da galeria de momentos agora são 4, incluindo o festainfantil.jpeg */
+        .gallery-grid { column-count: 2; column-gap: 20px; margin-top: 60px; }
+        .gallery-item { margin-bottom: 20px; display: inline-block; width: 100%; border-radius: 5px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* --- Seção Contato --- */
+        .contact-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; background: var(--color-white); padding: 60px; border-radius: 5px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .contact-form-wrapper h2 { text-align: left; }
+        .contact-info li { font-size: 1.05rem; margin-bottom: 20px; display: flex; align-items: center; }
+        .contact-info li i { color: var(--color-secondary); margin-right: 18px; font-size: 1.3rem; width: 25px; }
+
+
+        /* --- Rodapé --- */
+        footer { background: var(--color-primary); color: var(--color-text-light); text-align: center; padding: 40px 0; margin-top: 100px; font-size: 0.9rem; font-weight: 300; }
+        .footer-main-info { font-weight: 500; color: var(--color-secondary); display: block; margin-top: 10px; font-size: 1rem; }
+
+        /* --- Estilos para Documentos Legais (Integrados do TESTE.html) --- */
+
+        #legal-docs-wrapper {
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 40px;
+            max-width: 900px; /* Reduz a largura para melhor leitura do documento */
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        /* Títulos Principais dos Documentos (Playfair Display - Dourado do Site) */
+        #legal-docs-wrapper .main-title-legal {
+            font-family: var(--font-title);
+            font-size: 2.5em;
+            color: var(--color-secondary); /* Usa o Dourado do site */
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 15px;
+        }
+
+        /* Subtítulos dos Documentos (Playfair Display - Dourado do Site) */
+        #legal-docs-wrapper h3 {
+            font-family: var(--font-title);
+            color: var(--color-secondary); /* Usa o Dourado do site */
+            border-bottom: 1px solid var(--color-secondary);
+            padding-bottom: 5px;
+            margin-top: 40px;
+            font-size: 1.5em;
+        }
+
+        /* Linha divisória entre Termos e Política */
+        .legal-separator {
+            border: 0; 
+            height: 1px; 
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--color-secondary), rgba(0, 0, 0, 0)); 
+            margin: 60px 0;
+        }
+
+        /* Sumário Navegável (Botões de Navegação) */
+        .table-of-contents {
+            margin-bottom: 40px;
+            border: 1px solid var(--color-secondary); /* Usa o Dourado do site */
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fcfcfc;
+        }
+
+        .table-of-contents h4 {
+            font-family: var(--font-title);
+            color: var(--color-secondary); /* Usa o Dourado do site */
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .nav-link-local {
+            font-family: var(--font-body);
+            color: var(--color-text-dark); /* Usa o texto escuro do site */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-link-local:hover {
+            color: var(--color-secondary); /* Usa o Dourado do site */
+            text-decoration: underline;
+        }
+
+        /* Estilo do botão de DPO (Interativo e Clicável) */
+        .dpo-button {
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-primary); /* Texto Marrom Escuro */
+            background-color: var(--color-secondary); /* Dourado do site */
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            transition: opacity 0.3s, background-color 0.3s;
+        }
+
+        .dpo-button:hover {
+            opacity: 0.9;
+            background-color: #bfa04e; /* Versão um pouco mais escura do dourado */
+        }
+
+        /* Estilo da Tabela de Dados */
+        #legal-docs-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        #legal-docs-wrapper th, #legal-docs-wrapper td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #legal-docs-wrapper th {
+            background-color: #f2f2f2;
+            color: var(--color-text-dark);
+        }
+
+        /* --- Responsividade --- */
+        @media(max-width: 992px) {
+            .section-title { font-size: 2.4rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .about-content { padding-left: 0; }
+            .gallery-grid { column-count: 2; }
+            .dishes-gallery { column-count: 2; } 
+            .contact-container { grid-template-columns: 1fr; gap: 40px; padding: 40px; }
+            /* Responsividade adicional para serviços */
+            .service-item { padding: 20px; }
+        }
+
+        @media(max-width: 768px) {
+            /* Título responsivo reduzido para 2.5rem */
+            .hero-content h1 { font-size: 2.5rem; } 
+            .hamburger-menu { display: block; }
+            .nav-menu { display: none; position: absolute; top: var(--header-height); left: 0; width: 100%; background: var(--color-background); box-shadow: 0 5px 10px rgba(0,0,0,0.1); flex-direction: column; text-align: center; padding-bottom: 20px; }
+            .nav-menu.active { display: flex; }
+            .nav-menu a, #main-header.scrolled .navbar .nav-menu a { color: var(--color-primary); font-size: 1.1rem; }
+            .dishes-gallery { column-count: 1; }
+        }
+    </style>
+    </head>
+<body>
+
+    <div id="page-loader">
+        <img src="Logo.jpeg" alt="Carregando Maison Buffet" class="loader-logo">
+        <div class="loader-spinner"></div>
+    </div>
+    
+    <div id="content" class="hidden">
+        
+        <header id="main-header">
+            <nav class="navbar">
+                <div class="container">
+                    <a href="#home" class="logo">
+                        <img src="Logo.jpeg" alt="Maison Buffet Logo">
+                    </a>
+                    <ul class="nav-menu">
+                        <li><a href="#sobre">Sobre Nós</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#cardapios">Cardápios</a></li>
+                        <li><a href="#galeria">Galeria</a></li>
+                        <li><a href="#contato">Orçamento</a></li>
+                        <li><a href="#documentos-legais">Legal</a></li>
+                    </ul>
+                    <div class="hamburger-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section id="home" class="hero">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="reveal">Maison Buffet<br>Solução em Gastronomia Empresarial</h1>
+                    <p class="reveal reveal-delay-1">Excelência e Profissionalismo no DF e Entorno. Elevamos o padrão dos seus eventos corporativos e sociais.</p>
+                    <a href="#contato" class="btn btn-primary reveal reveal-delay-2">Solicite uma Proposta Formal</a>
+                </div>
+            </section>
+
+            <section id="sobre" class="section">
+                <div class="container about-container">
+                    <div class="about-image reveal">
+                        <img src="persona.jpeg" alt="Profissional da Maison Buffet em ambiente de evento.">
+                    </div>
+                    <div class="about-content reveal reveal-delay-1">
+                        <h2 class="section-title">Nossa Missão</h2>
+                        <p>A Maison Buffet é a **solução completa em serviços de buffet**, projetada para elevar o padrão dos seus **eventos corporativos, institucionais e sociais**. Nosso compromisso é com a excelência, o profissionalismo e a formalidade, elementos essenciais para que cada ocasião reflita a seriedade e o valor da sua empresa.</p>
+                        <p>Com uma operação estrategicamente estabelecida, temos o prazer de atender com rigor e qualidade **todo o Distrito Federal e seu Entorno**.</p>
+                        <a href="#servicos" class="btn btn-secondary">Conheça Nossos Serviços</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="servicos" class="section bg-dark">
+                <div class="container">
+                    <h2 class="section-title light-text">Nossos Pilares de Serviço</h2>
+                    <div class="services-grid">
+                        <div class="service-item reveal">
+                            <div class="service-icon"><i class="fas fa-handshake"></i></div>
+                            <h3>Profissionalismo Impecável</h3>
+                            <p>Equipe de **chefs, nutricionistas e maîtres** altamente qualificados, treinados nos mais rígidos protocolos de higiene, apresentação e atendimento. Garantimos **discrição, eficiência e alto nível de formalidade**.</p>
+                        </div>
+                        <div class="service-item reveal reveal-delay-1">
+                            <div class="service-icon"><i class="fas fa-utensils"></i></div>
+                            <h3>Gastronomia de Excelência</h3>
+                            <p>Cardápios flexíveis e sofisticados, integralmente **personalizados**. Utilizamos ingredientes de primeira linha, garantindo frescor e sabor inigualáveis. Incluímos opções para **restrições alimentares e dietas específicas**.</p>
+                        </div>
+                        <div class="service-item reveal reveal-delay-2">
+                            <div class="service-icon"><i class="fas fa-route"></i></div>
+                            <h3>Atendimento Abrangente</h3>
+                            <p>Nossa logística é desenhada para pontualidade e execução perfeita **em qualquer localidade** dentro do DF e em todo o seu Entorno, seja em salões, auditórios ou escritórios.</p>
+                        </div>
+                    </div>
+                    <p class="text-center" style="margin-top: 50px; font-weight: 500;">
+                        *Nossa expertise nos permite atender a um leque diversificado de eventos, celebrando todas as fases da vida com menus e serviços apropriados.*
+                    </p>
+                </div>
+            </section>
+
+            <section id="cardapios" class="section">
+                <div class="container">
+                    <h2 class="section-title">Cardápios Assinatura e Proposta</h2>
+                    <p class="section-subtitle">
+                        Nosso produto central é a **Culinária Típica Brasileira refinada de Excelência**, uma celebração da gastronomia nacional. Adotamos a **precificação à la carte** por prato.
+                    </p>
+                    <div class="menu-grid">
+                        <div class="menu-card reveal" data-title="Menu Esmeralda (Coquetel Brasileiro)" data-price="Precificação Variável por Prato" data-description="Focado em coquetel volante com rica e autêntica experiência da culinária nacional. Ideal para eventos dinâmicos e corporativos. Inclui: Canapés finos, Verrines, Folhados e Ilha de pães, com foco em ingredientes brasileiros de alta qualidade.">
+                            <h3>Menu Brasileiro</h3>
+                            <p>Coquetel Volante</p>
+                        </div>
+                        <div class="menu-card reveal reveal-delay-1" data-title="Menu Rubi (Jantar de Gala)" data-price="Precificação Variável por Prato" data-description="Opções sofisticadas da cozinha mineira, Nordeste e Sul. Coquetel de entrada + Jantar completo. Menu totalmente personalizável para atender ao tema e perfil dos convidados.">
+                            <h3>Menu Gala</h3>
+                            <p>Jantar Clássico Corporativo</p>
+                        </div>
+                        <div class="menu-card reveal reveal-delay-2" data-title="Menu Diamante (Experiência Completa)" data-price="Desconto Progressivo por Volume" data-description="A experiência completa. Inclui serviços adicionais como Bar de Drinks Premium, Mesa de Doces e Café. Oferecemos uma estrutura de incentivo onde, **acima de uma certa quantidade de pessoas, o preço por pessoa é reduzido**, ideal para grandes eventos.">
+                            <h3>Menu Premium</h3>
+                            <p>Eventos de Grande Escala</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title" style="font-size: 2rem; margin-top: 40px;">NOSSAS SUGESTÕES DE PRATOS GOURMET</h3>
+                    <p class="section-subtitle" style="margin-bottom: 40px;">Inspire-se com algumas das opções que podemos preparar para o seu evento.</p>
+
+                    <div class="dishes-gallery reveal">
+                        <div class="dish-item"><img src="carne.jpeg" alt="Prato Gourmet de Carne"></div>
+                        <div class="dish-item"><img src="strogonoff.jpeg" alt="Prato de Strogonoff Gourmet"></div>
+                        <div class="dish-item"><img src="churrasco.jpeg" alt="Churrasco Gourmet"></div>
+                        <div class="dish-item"><img src="sobremesa.jpeg" alt="Sobremesa com Frutas"></div>
+                        <div class="dish-item"><img src="sofisticados.jpeg" alt="Drinks Sofisticados e Finos"></div>
+                        <div class="dish-item"><img src="martini.jpeg" alt="Drink Martini em Evento"></div>
+                        <div class="dish-item"><img src="feijoada.jpeg" alt="Feijoada Gourmet de Mesa"></div>
+                        <div class="dish-item"><img src="coquetel.jpeg" alt="Coquetel de Frutas Gourmet"></div>
+                        <div class="dish-item"><img src="caipirinha.jpeg" alt="Caipirinha Gourmet de Maracujá"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="galeria" class="section bg-light">
+                <div class="container">
+                    <h2 class="section-title">GALERIA DE MOMENTOS</h2>
+                    <p class="section-subtitle">A excelência do nosso serviço, montagem e equipe em ação.</p>
+                    <div class="gallery-grid reveal">
+                        <div class="gallery-item"><img src="casamento.jpeg" alt="Buffet completo para casamento ao ar livre"></div>
+                        <div class="gallery-item"><img src="festa.jpeg" alt="Bar de drinks em festa de 15 anos"></div>
+                        <div class="gallery-item"><img src="piscina.jpeg" alt="Churrasco com buffet em festa na piscina"></div>
+                        <div class="gallery-item"><img src="festainfantil.jpeg" alt="Festa infantil temática com buffet de doces e salgados"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="documentos-legais" class="section">
+                <div class="container">
+                    <h2 class="section-title">DOCUMENTOS LEGAIS</h2>
+                    <p class="section-subtitle">Acesse nossos Termos de Uso e nossa Política de Privacidade em conformidade com a LGPD.</p>
+
+                    <div id="legal-docs-wrapper" class="reveal">
+                        <div id="termos-de-uso">
+                            <h1 class="main-title-legal">TERMOS DE USO – MAISON BUFFET</h1>
+                            <p>Data da última atualização: Outubro de 2025</p>
+    
+                            <div class="table-of-contents">
+                                <h4>Sumário Navegável dos Termos de Uso</h4>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li><a href="#to-1" class="nav-link-local">1. Aceitação dos Termos</a></li>
+                                    <li><a href="#to-2" class="nav-link-local">2. Uso do Site</a></li>
+                                    <li><a href="#to-3" class="nav-link-local">3. Propriedade Intelectual</a></li>
+                                    <li><a href="#to-4" class="nav-link-local">4. Limitação de Responsabilidade</a></li>
+                                    <li><a href="#to-5" class="nav-link-local">5. Disposições Gerais e Foro</a></li>
+                                </ul>
+                            </div>
+                            <h3 id="to-1">1. Aceitação dos Termos</h3>
+                            <p>Ao acessar e utilizar o website da <strong>Maison Buffet</strong>, o Usuário concorda integralmente com estes Termos de Uso e com a nossa Política de Privacidade. Caso não concorde com qualquer disposição destes Termos, o Usuário não deve utilizar o site.</p>
+    
+                            <h3 id="to-2">2. Uso do Site</h3>
+                            <p>O Usuário compromete-se a utilizar o site de forma lícita, respeitando a legislação brasileira, os direitos de propriedade intelectual da <strong>Maison Buffet</strong> e de terceiros. É vedada a utilização do site para envio de conteúdo que promova conduta ilegal, spam ou vírus.</p>
+    
+                            <h3 id="to-3">3. Propriedade Intelectual</h3>
+                            <p>Todos os conteúdos, incluindo textos, imagens, vídeos, logotipos, designs, códigos e o código-fonte do site, são de propriedade exclusiva da <strong>Maison Buffet</strong> ou de terceiros que licenciaram seu uso, sendo protegidos pela legislação de direitos autorais e propriedade industrial. A reprodução, distribuição ou modificação de qualquer conteúdo sem autorização expressa é proibida.</p>
+    
+                            <h3 id="to-4">4. Limitação de Responsabilidade</h3>
+                            <p>A <strong>Maison Buffet</strong> não se responsabiliza por:</p>
+                            <ul>
+                                <li>Danos ou prejuízos decorrentes da interrupção, suspensão ou término dos serviços do site.</li>
+                                <li>Conteúdos de websites de terceiros, mesmo que acessados através de links disponíveis no nosso site.</li>
+                                <li>Prejuízos causados por vírus ou outros elementos nocivos que possam afetar o equipamento do Usuário.</li>
+                            </ul>
+    
+                            <h3 id="to-5">5. Disposições Gerais e Foro</h3>
+                            <p>Estes Termos de Uso podem ser alterados a qualquer momento pela <strong>Maison Buffet</strong>. O uso continuado do site após a publicação de alterações constitui aceitação dos novos Termos. Fica eleito o Foro da Comarca de Brasília, Distrito Federal, para dirimir quaisquer questões relativas a estes Termos, com renúncia a qualquer outro, por mais privilegiado que seja.</p>
+                        </div>
+    
+                        <hr class="legal-separator">
+    
+    
+                        <div id="politica-de-privacidade">
+                            <h1 class="main-title-legal">POLÍTICA DE PRIVACIDADE E PROTEÇÃO DE DADOS (LGPD)</h1>
+                            <p>Data da última atualização: Outubro de 2025</p>
+    
+                            <div class="table-of-contents">
+                                <h4>Sumário Navegável da Política de Privacidade</h4>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li><a href="#pp-1" class="nav-link-local">1. Introdução e Compromisso LGPD</a></li>
+                                    <li><a href="#pp-2" class="nav-link-local">2. Dados Pessoais Coletados e Finalidade</a></li>
+                                    <li><a href="#pp-3" class="nav-link-local">3. Compartilhamento de Dados</a></li>
+                                    <li><a href="#pp-4" class="nav-link-local">4. Direitos do Titular (Interativo e Clicável)</a></li>
+                                    <li><a href="#pp-5" class="nav-link-local">5. Segurança dos Dados</a></li>
+                                </ul>
+                            </div>
+                            <h3 id="pp-1">1. Introdução e Compromisso LGPD</h3>
+                            <p>A <strong>Maison Buffet</strong> (“Nós”) valoriza sua privacidade e está comprometida com a proteção de seus dados pessoais. Esta Política foi elaborada em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 – LGPD) e descreve como coletamos, utilizamos e protegemos as informações fornecidas em nosso site.</p>
+    
+                            <h3 id="pp-2">2. Dados Pessoais Coletados e Finalidade</h3>
+                            <p>Coletamos dados pessoais estritamente necessários para o funcionamento e prestação de nossos serviços, com base no consentimento e no legítimo interesse.</p>
+    
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Dados</th>
+                                        <th>Fonte / Contexto</th>
+                                        <th>Finalidade do Tratamento</th>
+                                        <th>Base Legal (LGPD)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nome, E-mail, Telefone.</td>
+                                        <td>Formulário de Contato (Seção "Entre em Contato").</td>
+                                        <td>Fornecer orçamentos, propostas e entrar em contato para tratar de eventos corporativos e sociais, conforme sua solicitação.</td>
+                                        <td>Consentimento do Titular (LGPD, Art. 7º, I).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Endereço IP, dados de navegação, dispositivo.</td>
+                                        <td>Cookies e tecnologias de rastreamento (Análise estatística).</td>
+                                        <td>Análise estatística para melhorar a performance e usabilidade do site.</td>
+                                        <td>Legítimo Interesse e Consentimento (LGPD, Art. 7º, IX e I).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                            <h3 id="pp-3">3. Compartilhamento de Dados</h3>
+                            <p>A <strong>Maison Buffet</strong> não compartilha seus dados pessoais com terceiros, exceto quando necessário para:</p>
+                            <ul>
+                                <li>Cumprir obrigações legais, regulatórias ou ordens judiciais.</li>
+                                <li>Prover serviços essenciais (ex: provedores de hospedagem web, ferramentas de análise de tráfego), garantindo que estes terceiros mantenham a confidencialidade e segurança dos dados.</li>
+                            </ul>
+    
+                            <h3 id="pp-4">4. Direitos do Titular (Interativo e Clicável)</h3>
+                            <p>De acordo com a LGPD, você possui diversos direitos em relação aos seus dados, como acesso, correção, eliminação e revogação do consentimento.</p>
+                            <p>Para exercer qualquer um destes direitos, solicitamos que entre em contato com nosso Encarregado de Dados (DPO) através do e-mail clicável abaixo:</p>
+                            <p style="text-align: center; margin-top: 30px;">
+                                <a href="mailto:dpo@maisonbuffet.com.br" class="dpo-button">
+                                    <i class="fas fa-envelope"></i> Exercer Meus Direitos (DPO)
+                                </a>
+                            </p>
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 10px;"><em>*O clique no botão abre seu cliente de e-mail para enviar a solicitação diretamente ao DPO.</em></p>
+    
+                            <h3 id="pp-5">5. Segurança dos Dados</h3>
+                            <p>A <strong>Maison Buffet</strong> adota medidas técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou difusão. Isso inclui, por exemplo, o uso de protocolo HTTPS (criptografia de comunicação) e restrição de acesso aos dados.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="contato" class="section">
+                <div class="container contact-container">
+                    <div class="contact-form-wrapper reveal">
+                        <h2 class="section-title">Solicite uma Proposta Formal</h2>
+                        <p>Entre em contato conosco e solicite uma proposta formal. Estamos à disposição para agendar uma reunião e detalhar como nossa solução se integrará com sucesso aos seus planos.</p>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required placeholder="Nome Completo">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required placeholder="Seu melhor e-mail">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="guests" name="guests" min="20" placeholder="Número de Convidados (Aprox.)">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="4" placeholder="Detalhes do Evento (Tipo, Data Estimada, Local no DF ou Entorno, etc.)"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+                        </form>
+                    </div>
+                    <div class="contact-info reveal reveal-delay-1">
+                        <h3>Informações de Contato</h3>
+                        <p>Maison Buffet: Sua Solução de Buffet Profissional no DF e Entorno.</p>
+                        <ul>
+                            <li><i class="fas fa-phone"></i> **(61) 3328-7878**</li>
+                            <li><i class="fas fa-envelope"></i> **maisonbuffet@gmail.com**</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Atendimento em **Todo o DF e Entorno**.</li>
+                        </ul>
+                        <div class="social-media">
+                            <h4>Local Fixo para Degustação</h4>
+                            <p style="font-size: 1rem; color: #555;">Disponibilizamos um local fixo para **degustações agendadas**, permitindo validar a qualidade antes da contratação.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>
+                    <strong class="footer-main-info">Maison Buffet | Sua Solução de Buffet Profissional no DF e Entorno.</strong>
+                    <br>
+                    Telefone de Contato: (61) 3328-7878 | E-mail Profissional: maisonbuffet@gmail.com
+                </p>
+                <p style="font-size: 0.8rem; margin-top: 15px;">
+                    &copy; 2025 Maison Buffet. Todos os direitos reservados.
+                    <br>
+                    *Requisito Contratual: O contrato deve ser formalizado por uma pessoa legalmente responsável, com idade mínima de 18 anos.*
+                </p>
+            </div>
+        </footer>
+
+        <div id="menuModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3 id="modal-title"></h3>
+                <strong id="modal-price"></strong>
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const content = document.getElementById('content');
+            const pageLoader = document.getElementById('page-loader');
+
+            // LÓGICA CRÍTICA DO LOADER: Esconde o loader e revela o conteúdo principal
+            window.onload = () => {
+                // Garante que o loader seja escondido
+                pageLoader.style.opacity = '0';
+                setTimeout(() => {
+                    pageLoader.style.display = 'none';
+                    // Revela o conteúdo principal com uma transição suave
+                    content.classList.remove('hidden');
+                    content.classList.add('visible');
+                    // Chama a função de scroll reveal logo após a página aparecer
+                    checkReveal(); 
+                }, 500); 
+            };
+
+            // --- 1. Lógica do Header que muda ao rolar (Scroll) ---
+            const header = document.getElementById('main-header');
+            const handleScroll = () => {
+                if (window.scrollY > 50) { 
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                checkReveal(); // Verifica as animações de scroll
+            };
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Executa uma vez na abertura para o header ser transparente se estiver no topo
+
+
+            // --- 2. Interatividade do Menu Hamburger (Celular) ---
+            const hamburger = document.querySelector('.hamburger-menu');
+            const navMenu = document.querySelector('.nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const icon = hamburger.querySelector('i');
+                // Lógica de ícone aprimorada:
+                if (navMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Fecha o menu ao clicar em um link (para celular)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        hamburger.querySelector('i').classList.remove('fa-times');
+                        hamburger.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+
+
+            // --- 3. Interatividade do Modal (Popup) dos Cardápios ---
+            const modal = document.getElementById('menuModal');
+            const closeButton = document.querySelector('.close-button');
+            const menuCards = document.querySelectorAll('.menu-card');
+
+            const modalTitle = document.getElementById('modal-title');
+            const modalPrice = document.getElementById('modal-price');
+            const modalDescription = document.getElementById('modal-description');
+
+            menuCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = card.getAttribute('data-title');
+                    const price = card.getAttribute('data-price');
+                    const description = card.getAttribute('data-description');
+
+                    modalTitle.textContent = title;
+                    modalPrice.textContent = price;
+                    modalDescription.textContent = description;
+
+                    modal.classList.add('show');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('show');
+            };
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal(); 
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.classList.contains('show')) closeModal();
+            });
+
+
+            // --- 4. Interatividade do Formulário de Contato (Simulação) ---
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault(); 
+                alert('Obrigado! Sua solicitação de proposta foi enviada.\nEntraremos em contato em breve pelo seu e-mail ou telefone.');
+                contactForm.reset();
+            });
+
+            // --- 5. Animação de "Reveal on Scroll" (Revelar ao Rolar) ---
+            const revealElements = document.querySelectorAll('.reveal');
+
+            // Função que verifica se os elementos estão visíveis para animar
+            function checkReveal() {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    const revealTop = el.getBoundingClientRect().top;
+                    if (revealTop < windowHeight - 100) { // Ativa 100px antes de chegar no topo
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', checkReveal);
+            checkReveal(); 
+        });
+    </script>
+</body>
+</html>
